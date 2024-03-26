@@ -4,21 +4,21 @@ Um sistema para um PetShop, onde será possível gerenciar os serviços e os cli
 
 ## :technologist: Membros da equipe
 
-Lais Freitas de Queiroz - 470580 - Design Digital
-Arusha Silveira Holanda Gomes - 471988 - Design Digital
+- Lais Freitas de Queiroz - 470580 - Design Digital
+- Arusha Silveira Holanda Gomes - 471988 - Design Digital
 
 ## :people_holding_hands: Papéis ou tipos de usuário da aplicação
 
-Administrador
-Médico Veterinário
-Atendente 
-Usuário Não Logado
+- Administrador
+- Médico Veterinário
+- Atendente 
+- Usuário Não Logado
 
 ## :spiral_calendar: Entidades ou tabelas do sistema
 
-Usuário
-Serviços
-Clientes
+- Usuário
+- Serviços
+- Clientes
 
 ## :triangular_flag_on_post:	 Principais funcionalidades da aplicação
 
