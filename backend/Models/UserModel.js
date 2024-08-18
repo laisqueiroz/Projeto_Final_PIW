@@ -1,47 +1,34 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
-class User {
-    constructor(id, login, role, password) {
-        this.id = id;
-        this.login = login;
-        this.role = role;
-        this.password = password;
-    }
-    getLogin() {
-        return this.login;
-    }
-    setLogin(login) {
-        if (login.trim().length === 0) {
-            throw new Error('O nome não pode ser vazio.');
-        }
-        this.login = login;
-    }
-    getRole() {
-        return this.role;
-    }
-    setRole(role) {
-        if (role === 'admin' || role === 'medVet' || role === 'funcionario') {
-            this.role = role;
-        }
-        else {
-            this.role = 'unregisteredUser';
-        }
-    }
-    getPassword() {
-        return this.password;
-    }
-    setPassword(password) {
-        if (password.trim().length === 0) {
-            throw new Error('O senha não pode ser vazio.');
-        }
-        this.password = password;
-    }
-    getId() {
-        return this.id;
-    }
-    setId(id) {
-        this.id = id;
-    }
+const sequelize_1 = require("sequelize");
+const database_1 = __importDefault(require("../data/database"));
+class User extends sequelize_1.Model {
 }
 exports.User = User;
+User.init({
+    id: {
+        type: sequelize_1.DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    login: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    role: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    password: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+}, {
+    sequelize: database_1.default,
+    tableName: 'users',
+    timestamps: false,
+});
