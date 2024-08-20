@@ -1,34 +1,36 @@
 <template>
-    <div>
-      <h1>Lista de Usuários</h1>
-      <router-link to="/users/new">Novo Usuário</router-link>
-      <ul>
-        <li v-for="user in users" :key="user.id">
-          {{ user.login }} - {{ user.role }}
-          <router-link :to="{ name: 'EditUser', params: { id: user.id }}">Editar</router-link>
-          <button @click="deleteUser(user.id)">Deletar</button>
-        </li>
-      </ul>
-    </div>
-  </template>
-  
-  <script lang="ts">
-  import { defineComponent, onMounted } from 'vue';
-  import { useUserStore } from '../stores/user';
-  
-  export default defineComponent({
-    setup() {
-      const userStore = useUserStore();
-  
-      onMounted(() => {
-        userStore.fetchUsers();
-      });
-  
-      return {
-        users: userStore.users,
-        deleteUser: userStore.deleteUser,
-      };
+  <div>
+    <h2>Lista de Usuários</h2>
+    <ul>
+      <li v-for="user in users" :key="user.id">
+        {{ user.login }} - {{ user.role }}
+        <button @click="deleteUser(user.id)">Excluir</button>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      users: [],
+    };
+  },
+  methods: {
+    async fetchUsers() {
+      const response = await axios.get("http://localhost:3000/users");
+      this.users = response.data;
     },
-  });
-  </script>
-  
+    async deleteUser(id) {
+      await axios.delete(`http://localhost:3000/users/${id}`);
+      this.fetchUsers();
+    },
+  },
+  mounted() {
+    this.fetchUsers();
+  },
+};
+</script>
