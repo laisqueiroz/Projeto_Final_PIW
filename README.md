@@ -12,20 +12,22 @@ Um sistema para um PetShop, onde será possível gerenciar os serviços e os cli
 - Administrador
 - Médico Veterinário
 - Atendente 
-- Usuário Não Logado
+- Cliente 
 
 ## :spiral_calendar: Entidades ou tabelas do sistema
 
 - Usuário
 - Serviços
-- Clientes
+- Pets
 
 ## :triangular_flag_on_post:	 Principais funcionalidades da aplicação
 
 - O administrador poderá gerenciar os serviços oferecidos (criar, modificar, deletar) e os clientes do PetShop.
-- O atendente pode cadastrar novos clientes e atribuir serviços a cada cliente.
+- O atendente pode cadastrar novos clientes e atribuir serviços a cada cliente/pet.
 - O médico veterinário pode ver os clientes, ver e adicionar informações ao histórico médico.
-- Os usuários não cadastrados podem ver os serviços oferecidos.
+- Os clientes podem ver os serviços oferecidos e escolher um ou mais serviços para seu pet.
+- Os Clientes poderam adicionar ou excluir os seus Pets.
+
 
 
 ----
@@ -51,9 +53,9 @@ Lista as tecnologias, frameworks e bibliotecas utilizados.
 
 | Entidade| Criação | Leitura | Atualização | Remoção |
 | --- | --- | --- | --- | --- |
-| Entidade 1 | X |  X  |  | X |
-| Entidade 2 | X |    |  X | X |
-| Entidade 3 | X |    |  |  |
+| USERS | X |  X  | X | X |
+| SERVICES | X |  X  |  X | X |
+| PET | X |  X  | X | X |
 
 > Lembre-se que é necessário implementar o CRUD de pelo menos duas entidades.
 
@@ -61,5 +63,7 @@ Lista as tecnologias, frameworks e bibliotecas utilizados.
 
 | Método HTTP | URL |
 | --- | --- |
-| GET | api/entidade1/|
-| POST | api/entidade2 |
+| GET | api/users|
+| POST | api/users |
+| PUT | api/users/:id |
+| DELETE | api/users/:id |
