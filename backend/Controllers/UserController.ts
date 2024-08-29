@@ -1,7 +1,26 @@
 import { Request, Response } from 'express';
 import { User } from '../Models/UserModel';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
+
+const secret_key = 'J55y0WyfKH0z9oUXVkM8';
 
 User.sync();
+
+export const loginUser = async (req: Request, res: Response): Promise<Response> => {
+  console.log('chegou aqui')
+  const { email, password} = req.body;
+
+  const user = await User.findOne({where: {email} });
+
+  if(!user || !user.checkPassword(password)){
+    return res.status(401).json({ message: 'Informações Inválidas'})
+  };
+
+  const token = jwt.sign({id: user.id, role: user.role, email: user.email}, secret_key, {expiresIn: '1h'});
+
+  return res.status(200).json({token});
+};
 
 export const getUsers = async (req: Request, res: Response): Promise<Response> => {
   const users = await User.findAll();
@@ -9,19 +28,20 @@ export const getUsers = async (req: Request, res: Response): Promise<Response> =
 };
 
 export const createUser = async (req: Request, res: Response): Promise<Response> => {
-  const { login, password, role } = req.body;
 
-  if (!login || !password || !role) {
+  const { name, lastname, email, password, role } = req.body;
+
+  if (!name || !lastname|| !email || !password || !role) {
     return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
   }
 
-  const newUser = await User.create({ login, password, role });
+  const newUser = await User.create({ name, lastname, email, password, role });
   return res.status(201).json(newUser);
 };
 
 export const updateUser = async (req: Request, res: Response): Promise<Response> => {
   const { id } = req.params;
-  const { login, password, role } = req.body;
+  const { name, lastname, email, password, role } = req.body;
 
   const userToUpdate = await User.findByPk(id);
 
@@ -29,8 +49,10 @@ export const updateUser = async (req: Request, res: Response): Promise<Response>
     return res.status(404).json({ message: 'Usuário não encontrado.' });
   }
 
-  if (login) userToUpdate.login = login;
-  if (password) userToUpdate.password = password;
+  if (name) userToUpdate.name = name;
+  if (lastname) userToUpdate.lastname = lastname;
+  if (email) userToUpdate.email = email;
+  if (password) userToUpdate.password = await bcrypt.hash(password, 10);;
   if (role) userToUpdate.role = role;
 
   await userToUpdate.save();

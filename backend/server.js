@@ -13,5 +13,5 @@ app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
 app.use('/', UserRoutes_1.default);
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Servidor rodando na porta ${port} http://localhost:3000/`);
 });

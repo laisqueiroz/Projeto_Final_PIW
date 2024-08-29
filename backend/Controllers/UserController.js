@@ -8,35 +8,58 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.createUser = exports.getUsers = void 0;
+exports.deleteUser = exports.updateUser = exports.createUser = exports.getUsers = exports.loginUser = void 0;
 const UserModel_1 = require("../Models/UserModel");
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
+const secret_key = 'J55y0WyfKH0z9oUXVkM8';
 UserModel_1.User.sync();
+const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('chegou aqui');
+    const { email, password } = req.body;
+    const user = yield UserModel_1.User.findOne({ where: { email } });
+    if (!user || !user.checkPassword(password)) {
+        return res.status(401).json({ message: 'Informações Inválidas' });
+    }
+    ;
+    const token = jsonwebtoken_1.default.sign({ id: user.id, role: user.role, email: user.email }, secret_key, { expiresIn: '1h' });
+    return res.status(200).json({ token });
+});
+exports.loginUser = loginUser;
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield UserModel_1.User.findAll();
     return res.status(200).json(users);
 });
 exports.getUsers = getUsers;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { login, password, role } = req.body;
-    if (!login || !password || !role) {
+    const { name, lastname, email, password, role } = req.body;
+    if (!name || !lastname || !email || !password || !role) {
         return res.status(400).json({ message: 'Todos os campos são obrigatórios.' });
     }
-    const newUser = yield UserModel_1.User.create({ login, password, role });
+    const newUser = yield UserModel_1.User.create({ name, lastname, email, password, role });
     return res.status(201).json(newUser);
 });
 exports.createUser = createUser;
 const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
-    const { login, password, role } = req.body;
+    const { name, lastname, email, password, role } = req.body;
     const userToUpdate = yield UserModel_1.User.findByPk(id);
     if (!userToUpdate) {
         return res.status(404).json({ message: 'Usuário não encontrado.' });
     }
-    if (login)
-        userToUpdate.login = login;
+    if (name)
+        userToUpdate.name = name;
+    if (lastname)
+        userToUpdate.lastname = lastname;
+    if (email)
+        userToUpdate.email = email;
     if (password)
-        userToUpdate.password = password;
+        userToUpdate.password = yield bcryptjs_1.default.hash(password, 10);
+    ;
     if (role)
         userToUpdate.role = role;
     yield userToUpdate.save();

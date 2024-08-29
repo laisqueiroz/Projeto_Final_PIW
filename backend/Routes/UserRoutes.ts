@@ -1,11 +1,13 @@
 import { Router } from 'express';
-import { getUsers, createUser, updateUser, deleteUser } from '../Controllers/UserController';
+import { loginUser, getUsers, createUser, updateUser, deleteUser } from '../Controllers/UserController';
+import { authenticateJWT, authorizeRole, authorizeSelfOrAdmin } from '../Middlewares/AuthMiddleware';
 
 const router = Router();
 
-router.get('/users', getUsers);
-router.post('/users', createUser);
-router.put('/users/:id', updateUser);
-router.delete('/users/:id', deleteUser);
+router.get('/users', authenticateJWT, authorizeRole(['admin']), authorizeSelfOrAdmin, getUsers);
+router.post('/users', authenticateJWT, authorizeRole(['admin']), authorizeSelfOrAdmin, createUser);
+router.post('/login', loginUser);
+router.put('/users/:id', authenticateJWT, authorizeSelfOrAdmin, updateUser);
+router.delete('/users/:id', authenticateJWT, authorizeRole(['admin']), authorizeSelfOrAdmin, deleteUser);
 
 export default router;

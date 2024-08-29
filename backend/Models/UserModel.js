@@ -6,7 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../data/database"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 class User extends sequelize_1.Model {
+    checkPassword(password) {
+        return bcryptjs_1.default.compareSync(password, this.password);
+    }
 }
 exports.User = User;
 User.init({
@@ -15,7 +19,15 @@ User.init({
         autoIncrement: true,
         primaryKey: true,
     },
-    login: {
+    name: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    lastname: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+    },
+    email: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
