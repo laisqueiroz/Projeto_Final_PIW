@@ -3,17 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.User = void 0;
+exports.Services = void 0;
 const sequelize_1 = require("sequelize");
 const database_1 = __importDefault(require("../data/database"));
-class User extends sequelize_1.Model {
-    checkPassword(password) {
-        return password === this.password;
-    }
+class Services extends sequelize_1.Model {
 }
-exports.User = User;
-User.init({
-    id: {
+exports.Services = Services;
+Services.init({
+    serviceId: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
@@ -22,24 +19,20 @@ User.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
-    lastname: {
+    description: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
-    email: {
+    price: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
-    role: {
-        type: sequelize_1.DataTypes.STRING,
-        allowNull: false,
-    },
-    password: {
+    category: {
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
 }, {
     sequelize: database_1.default,
-    tableName: 'users',
+    tableName: 'services',
     timestamps: false,
 });

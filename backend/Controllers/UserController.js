@@ -15,13 +15,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUser = exports.updateUser = exports.createUser = exports.getUsers = exports.loginUser = void 0;
 const UserModel_1 = require("../Models/UserModel");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const secret_key = 'J55y0WyfKH0z9oUXVkM8';
 UserModel_1.User.sync();
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('chegou aqui');
     const { email, password } = req.body;
     const user = yield UserModel_1.User.findOne({ where: { email } });
+    console.log(user);
     if (!user || !user.checkPassword(password)) {
         return res.status(401).json({ message: 'Informações Inválidas' });
     }
@@ -58,8 +57,7 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     if (email)
         userToUpdate.email = email;
     if (password)
-        userToUpdate.password = yield bcryptjs_1.default.hash(password, 10);
-    ;
+        userToUpdate.password;
     if (role)
         userToUpdate.role = role;
     yield userToUpdate.save();

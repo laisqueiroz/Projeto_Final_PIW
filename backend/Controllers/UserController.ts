@@ -8,12 +8,12 @@ const secret_key = 'J55y0WyfKH0z9oUXVkM8';
 User.sync();
 
 export const loginUser = async (req: Request, res: Response): Promise<Response> => {
-  console.log('chegou aqui')
   const { email, password} = req.body;
 
   const user = await User.findOne({where: {email} });
-
+  console.log(user)
   if(!user || !user.checkPassword(password)){
+    
     return res.status(401).json({ message: 'Informações Inválidas'})
   };
 
@@ -52,7 +52,7 @@ export const updateUser = async (req: Request, res: Response): Promise<Response>
   if (name) userToUpdate.name = name;
   if (lastname) userToUpdate.lastname = lastname;
   if (email) userToUpdate.email = email;
-  if (password) userToUpdate.password = await bcrypt.hash(password, 10);;
+  if (password) userToUpdate.password;
   if (role) userToUpdate.role = role;
 
   await userToUpdate.save();

@@ -18,6 +18,7 @@ export const authenticateJWT = (req: CustomRequest, res: Response, next: NextFun
     if (err) return res.status(403).json({message: 'Token inválido.'});
     req.user = user;
   });
+
   next();
 };
 

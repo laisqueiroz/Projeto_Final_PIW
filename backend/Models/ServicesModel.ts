@@ -1,24 +1,18 @@
 import { DataTypes, Model } from 'sequelize';
 import sequelize from '../data/database';
 
-
-export class User extends Model {
+export class Services extends Model {
   [x: string]: any;
-  public id!: number;
+  public serviceId!: number;
   public name!: string;
-  public lastname!: string;
-  public email!: string;
-  public role!: string;
-  public password!: string;
-
-  public checkPassword(password: string): boolean {
-    return password === this.password;
-  }
+  public description!: string;
+  public price!: string;
+  public category!: string;
 }
 
-User.init(
+Services.init(
   {
-    id: {
+    serviceId: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
@@ -27,26 +21,22 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    lastname: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    email: {
+    price: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    role: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    password: {
+    category: {
       type: DataTypes.STRING,
       allowNull: false,
     },
   },
   {
     sequelize,
-    tableName: 'users',
+    tableName: 'services',
     timestamps: false,
   }
 );
