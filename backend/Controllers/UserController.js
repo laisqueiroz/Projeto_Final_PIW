@@ -26,7 +26,7 @@ const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     ;
     const token = jsonwebtoken_1.default.sign({ id: user.id, role: user.role, email: user.email }, secret_key, { expiresIn: '1h' });
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, role: user.role });
 });
 exports.loginUser = loginUser;
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

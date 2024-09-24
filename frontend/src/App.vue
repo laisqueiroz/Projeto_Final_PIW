@@ -1,24 +1,20 @@
 <template>
   <div id="app">
-    <h1>Gestão de Usuários</h1>
-    <UserForm @userCreated="fetchUsers" />
-    <UserList ref="userList" />
+    <router-view />
   </div>
 </template>
 
-<script>
-import UserForm from "./components/UserForm.vue";
-import UserList from "./components/UserList.vue";
+<script lang="ts">
+import { defineComponent } from "vue";
 
-export default {
-  components: {
-    UserForm,
-    UserList,
-  },
-  methods: {
-    fetchUsers() {
-      this.$refs.userList.fetchUsers();
-    },
-  },
-};
+export default defineComponent({
+  name: "App",
+});
 </script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: center;
+}
+</style>

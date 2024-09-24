@@ -18,8 +18,7 @@ export const loginUser = async (req: Request, res: Response): Promise<Response> 
   };
 
   const token = jwt.sign({id: user.id, role: user.role, email: user.email}, secret_key, {expiresIn: '1h'});
-
-  return res.status(200).json({token});
+  return res.status(200).json({token, role: user.role});
 };
 
 export const getUsers = async (req: Request, res: Response): Promise<Response> => {

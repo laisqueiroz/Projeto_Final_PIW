@@ -4,8 +4,7 @@ import { authenticateJWT, authorizeRole, authorizeSelfOrAdmin } from '../Middlew
 
 const router = Router();
 
-///router.get('/users', authenticateJWT, authorizeRole(['admin']), authorizeSelfOrAdmin, getUsers);
-router.get('/users', getUsers);
+router.get('/users', authenticateJWT, authorizeRole(['admin']), authorizeSelfOrAdmin, getUsers);
 router.post('/users', authenticateJWT, authorizeRole(['admin']), authorizeSelfOrAdmin, createUser);
 router.post('/login', loginUser);
 router.put('/users/:id', authenticateJWT, authorizeSelfOrAdmin, updateUser);
