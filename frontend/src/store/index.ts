@@ -1,10 +1,9 @@
 import { createStore } from "vuex";
 
-// Defina o tipo do estado
 interface User {
   id: number;
   name: string;
-  role: "admin" | "tutor" | "medVet"; // Defina os papéis permitidos
+  role: "admin" | "tutor" | "medVet"; 
 }
 
 interface State {
@@ -13,7 +12,7 @@ interface State {
 
 const store = createStore<State>({
   state: {
-    user: null, // Estado inicial do usuário
+    user: null, 
   },
   mutations: {
     setUser(state, user: User) {

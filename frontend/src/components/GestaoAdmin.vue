@@ -59,7 +59,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 100vh; /* Faz a página ocupar toda a altura da tela */
+  min-height: 100vh; 
   padding: 20px;
   background-color: #70c2d6;
 }

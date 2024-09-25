@@ -40,21 +40,18 @@
       </table>
     </div>
 
-    <!-- Modal Ver Usuário -->
     <UserModal
       v-if="selectedUser"
       :user="selectedUser"
       @close="closeViewUser"
     />
 
-    <!-- Modal Adicionar Usuário -->
     <AddUserModal
       v-if="isAddUserPopupOpen"
       @close="closeAddUserPopup"
       @addUser="addUser"
     />
 
-    <!-- Modal Confirmação de Exclusão -->
     <DeleteConfirmation
       v-if="isDeletePopupOpen"
       @confirm="deleteUser"
@@ -87,18 +84,17 @@ export default defineComponent({
     const isDeletePopupOpen = ref(false);
     const userIdToDelete = ref<number | null>(null);
 
-    // Fetch users from the backend with authentication
     onMounted(async () => {
-      const token = localStorage.getItem("token"); // Obtenha o token armazenado
+      const token = localStorage.getItem("token"); 
 
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, // Envie o token no cabeçalho
+          Authorization: `Bearer ${token}`, 
         },
       };
 
       try {
-        const response = await axios.get("http://localhost:3000/users", config); // Envia o token na requisição
+        const response = await axios.get("http://localhost:3000/users", config); 
         users.value = response.data;
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -126,15 +122,15 @@ export default defineComponent({
     };
 
     const addUser = async (newUser: User) => {
-      const token = localStorage.getItem("token"); // Obtenha o token armazenado
+      const token = localStorage.getItem("token"); 
 
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, // Envie o token no cabeçalho
+          Authorization: `Bearer ${token}`, 
         },
       };
 
-      await axios.post("http://localhost:3000/users", newUser, config); // Envia o token na requisição
+      await axios.post("http://localhost:3000/users", newUser, config); 
       users.value.push(newUser);
       closeAddUserPopup();
     };
@@ -145,18 +141,18 @@ export default defineComponent({
     };
 
     const deleteUser = async () => {
-      const token = localStorage.getItem("token"); // Obtenha o token armazenado
+      const token = localStorage.getItem("token"); 
 
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, // Envie o token no cabeçalho
+          Authorization: `Bearer ${token}`, 
         },
       };
 
       await axios.delete(
         `http://localhost:3000/users/${userIdToDelete.value}`,
         config
-      ); // Envia o token na requisição
+      ); 
       users.value = users.value.filter(
         (user) => user.id !== userIdToDelete.value
       );

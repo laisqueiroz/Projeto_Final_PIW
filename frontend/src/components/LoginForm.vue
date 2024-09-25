@@ -45,7 +45,7 @@ export default defineComponent({
     const email = ref<string>("");
     const password = ref<string>("");
     const error = ref<string | null>(null);
-    const router = useRouter(); // Para realizar o redirecionamento
+    const router = useRouter(); 
 
     const handleLogin = async () => {
       try {
@@ -66,16 +66,16 @@ export default defineComponent({
 
         const userRole = store.getters.getUserRole;
 
-        // Redirecionar com base no papel do usuário
+        
         switch (userRole) {
           case "admin":
-            router.push("/gestao"); // Redireciona para Gestão
+            router.push("/gestao"); 
             break;
           case "tutor":
-            router.push("/pets"); // Redireciona para página de Pets
+            router.push("/pets"); 
             break;
           case "medVet":
-            router.push("/listar-pets"); // Redireciona para Listar Pets
+            router.push("/listar-pets"); 
             break;
           default:
             error.value = "Papel de usuário desconhecido.";

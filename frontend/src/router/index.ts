@@ -1,20 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "@/components/HomePage.vue";
-import Login from "../components/LoginForm.vue"; // Componente de login
-import Gestao from "../components/GestaoAdmin.vue"; // Componente de Gestão (admin)
+import Login from "../components/LoginForm.vue"; 
+import Gestao from "../components/GestaoAdmin.vue"; 
 import GestaoUser from "@/components/GestaoUser.vue";
 import GestaoService from "@/components/GestaoService.vue";
-import Pets from "../components/PetsTutor.vue"; // Componente para Tutor listar/criar pets
-import ListarPets from "../components/ListarPets.vue"; // Componente para Veterinário listar pets
+import Pets from "../components/PetsTutor.vue"; 
+import ListarPets from "../components/ListarPets.vue"; 
 
 const routes = [
   { path: "/", name: "Home", component: HomePage },
   { path: "/login", name: "Login", component: Login },
-  { path: "/gestao", name: "Gestao", component: Gestao }, // Rota de gestão para Admin
+  { path: "/gestao", name: "Gestao", component: Gestao }, 
   { path: "/gestaouser", name: "GestaoUser", component: GestaoUser },
   { path: "/gestaoservice", name: "GestaoService", component: GestaoService },
-  { path: "/pets", name: "Pets", component: Pets }, // Rota de Pets para Tutor
-  { path: "/listar-pets", name: "ListarPets", component: ListarPets }, // Rota de Listar Pets para Médico Veterinário
+  { path: "/pets", name: "Pets", component: Pets }, 
+  { path: "/listar-pets", name: "ListarPets", component: ListarPets },
 ];
 
 const router = createRouter({

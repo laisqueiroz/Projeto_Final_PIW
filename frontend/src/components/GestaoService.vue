@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Gestão de Produtos/Serviços</h1>
-    <!-- Adicione mais conteúdo aqui -->
+    <!-- Adicionar conteúdo aqui -->
   </div>
 </template>
 
@@ -14,5 +14,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-/* Adicione os estilos aqui, se necessário */
+/* Adicionar os estilos aqui */
 </style>
