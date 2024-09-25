@@ -6,10 +6,7 @@
     </div>
     <div class="right-section">
       <h1>Boas-vindas ao PetCheck</h1>
-      <p>
-        Estamos felizes em tê-lo aqui. Cuide dos seus pets com nosso sistema de
-        agendamento online.
-      </p>
+      <p>Estamos felizes em tê-lo aqui. Seu pet sempre em boas mãos.</p>
       <button @click="goToLogin" class="login-button">Login</button>
     </div>
   </div>
@@ -40,6 +37,12 @@ export default defineComponent({
   height: 100vh;
 }
 
+p {
+  width: 50%;
+  font-size: 20pt;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .left-section,
 .right-section {
   width: 50%;
@@ -50,11 +53,11 @@ export default defineComponent({
 }
 
 .left-section {
-  background-color: #f0f8ff;
+  background-color: #e2e2e2;
 }
 
 .right-section {
-  background-color: #fff8dc;
+  background-color: #70c2d6;
   text-align: center;
 }
 
@@ -64,8 +67,8 @@ export default defineComponent({
 }
 
 .login-button {
-  background-color: #4caf50;
-  color: white;
+  background-color: #fff;
+  color: rgb(0, 0, 0);
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -74,6 +77,7 @@ export default defineComponent({
 }
 
 .login-button:hover {
-  background-color: #45a049;
+  background-color: #5f5e5e;
+  color: #fff;
 }
 </style>

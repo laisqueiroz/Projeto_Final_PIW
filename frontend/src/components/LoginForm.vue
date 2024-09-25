@@ -54,6 +54,10 @@ export default defineComponent({
           password: password.value,
         });
 
+        const token = response.data.token;
+
+        localStorage.setItem("token", token);
+
         const user = response.data;
 
         error.value = null;
