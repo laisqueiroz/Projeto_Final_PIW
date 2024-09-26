@@ -3,7 +3,7 @@ import { createStore } from "vuex";
 interface User {
   id: number;
   name: string;
-  role: "admin" | "tutor" | "medVet"; 
+  role: "admin" | "tutor" | "medVet";
 }
 
 interface State {
@@ -12,7 +12,7 @@ interface State {
 
 const store = createStore<State>({
   state: {
-    user: null, 
+    user: null,
   },
   mutations: {
     setUser(state, user: User) {

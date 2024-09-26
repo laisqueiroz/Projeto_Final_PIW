@@ -45,7 +45,7 @@ export default defineComponent({
     const email = ref<string>("");
     const password = ref<string>("");
     const error = ref<string | null>(null);
-    const router = useRouter(); 
+    const router = useRouter();
 
     const handleLogin = async () => {
       try {
@@ -66,16 +66,15 @@ export default defineComponent({
 
         const userRole = store.getters.getUserRole;
 
-        
         switch (userRole) {
           case "admin":
-            router.push("/gestao"); 
+            router.push("/gestao");
             break;
           case "tutor":
-            router.push("/pets"); 
+            router.push("/pets");
             break;
           case "medVet":
-            router.push("/listar-pets"); 
+            router.push("/listar-pets");
             break;
           default:
             error.value = "Papel de usuário desconhecido.";
@@ -107,22 +106,18 @@ export default defineComponent({
   height: 100vh;
   margin: 0;
 }
-.container {
-  width: 300px;
-  padding: 20px;
-  background-color: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-}
 h1 {
   text-align: center;
   font-size: 50px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
   margin-bottom: 60px;
   color: #ffffff;
 }
 h2 {
   text-align: center;
-  margin-bottom: 20px;
+  margin: 20px;
+  font-weight: bold;
 }
 input[type="text"],
 input[type="password"],
@@ -149,7 +144,7 @@ button:hover {
   background-color: #2e7055;
 }
 .login-container {
-  max-width: 600px;
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #ccc;
@@ -165,7 +160,7 @@ label {
 input {
   width: 100%;
   padding: 8px;
-  margin-bottom: 15px;
+  margin: 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }

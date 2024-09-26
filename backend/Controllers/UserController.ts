@@ -59,6 +59,12 @@ export const updateUser = async (req: Request, res: Response): Promise<Response>
   return res.status(200).json(userToUpdate);
 };
 
+export const getUserId = async ( req: Request, res: Response): Promise<Response> => {
+  const { id } = req.params;
+
+  const userId = await User.findByPk(id);
+  return res.status(200).json(userId);
+}
 export const deleteUser = async (req: Request, res: Response): Promise<Response> => {
   const { id } = req.params;
 

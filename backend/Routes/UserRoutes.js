@@ -5,6 +5,7 @@ const UserController_1 = require("../Controllers/UserController");
 const AuthMiddleware_1 = require("../Middlewares/AuthMiddleware");
 const router = (0, express_1.Router)();
 router.get('/users', AuthMiddleware_1.authenticateJWT, (0, AuthMiddleware_1.authorizeRole)(['admin']), AuthMiddleware_1.authorizeSelfOrAdmin, UserController_1.getUsers);
+router.get('/users/:id', UserController_1.getUserId);
 router.post('/users', AuthMiddleware_1.authenticateJWT, (0, AuthMiddleware_1.authorizeRole)(['admin']), AuthMiddleware_1.authorizeSelfOrAdmin, UserController_1.createUser);
 router.post('/login', UserController_1.loginUser);
 router.put('/users/:id', AuthMiddleware_1.authenticateJWT, AuthMiddleware_1.authorizeSelfOrAdmin, UserController_1.updateUser);

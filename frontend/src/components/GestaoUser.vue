@@ -1,15 +1,18 @@
 <template>
   <h1>Gestão de Usuários</h1>
   <div class="container">
-    <div class="button-cadastro">
-      <button @click="openAddUserPopup" class="btn btn-success add-user-btn">
+    <div class="buttons-actions">
+      <button @click="toGoBack" type="button" class="btn btn-outline-primary">
+        Menu Anterior
+      </button>
+      <button @click="addUser" type="button" class="btn btn-outline-primary">
         Novo Usuário
       </button>
     </div>
     <div class="container mt-5">
       <table class="table table-striped">
         <thead>
-          <tr>
+          <tr class="table-dark">
             <th>Nome</th>
             <th>Sobrenome</th>
             <th>Email</th>
@@ -19,19 +22,19 @@
         </thead>
         <tbody>
           <tr v-for="user in users" :key="user.id">
-            <td>{{ user.name }}</td>
-            <td>{{ user.lastname }}</td>
+            <td>{{ capitalize(user.name) }}</td>
+            <td>{{ capitalize(user.lastname) }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.role }}</td>
             <td>
               <!-- Botões de Ações -->
-              <button @click="viewUser(user)" class="action-btn">
+              <button @click="viewUser(user.id)" class="btn action-btn">
                 <i class="fa-solid fa-eye"></i>
               </button>
-              <button @click="editUser(user)" class="action-btn">
+              <button @click="editUser(user.id)" class="btn action-btn">
                 <i class="fa-solid fa-pen"></i>
               </button>
-              <button @click="confirmDeleteUser(user.id)" class="action-btn">
+              <button @click="confirmDelete(user.id)" class="btn action-btn">
                 <i class="fa-solid fa-trash"></i>
               </button>
             </td>
@@ -39,33 +42,13 @@
         </tbody>
       </table>
     </div>
-
-    <UserModal
-      v-if="selectedUser"
-      :user="selectedUser"
-      @close="closeViewUser"
-    />
-
-    <AddUserModal
-      v-if="isAddUserPopupOpen"
-      @close="closeAddUserPopup"
-      @addUser="addUser"
-    />
-
-    <DeleteConfirmation
-      v-if="isDeletePopupOpen"
-      @confirm="deleteUser"
-      @cancel="closeDeletePopup"
-    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
 import axios from "axios";
-import UserModal from "./UserModal.vue";
-import AddUserModal from "./AddUserModal.vue";
-import DeleteConfirmation from "./DeleteConfirmation.vue";
+import { useRouter } from "vue-router";
 
 interface User {
   id: number;
@@ -76,107 +59,85 @@ interface User {
 }
 
 export default defineComponent({
-  components: { UserModal, AddUserModal, DeleteConfirmation },
   setup() {
     const users = ref<User[]>([]);
-    const selectedUser = ref<User | null>(null);
-    const isAddUserPopupOpen = ref(false);
-    const isDeletePopupOpen = ref(false);
-    const userIdToDelete = ref<number | null>(null);
+    const router = useRouter();
 
     onMounted(async () => {
-      const token = localStorage.getItem("token"); 
+      const token = localStorage.getItem("token");
 
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       };
 
       try {
-        const response = await axios.get("http://localhost:3000/users", config); 
+        const response = await axios.get("http://localhost:3000/users", config);
         users.value = response.data;
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Não foi possível listar os usuários: ", error);
       }
     });
 
-    const viewUser = (user: User) => {
-      selectedUser.value = user;
+    const capitalize = (text: string) => {
+      if (!text) return "";
+      return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     };
 
-    const closeViewUser = () => {
-      selectedUser.value = null;
+    const addUser = () => {
+      router.push("/add-user");
     };
 
-    const editUser = (user: User) => {
-      window.location.href = `/editar-usuario/${user.id}`;
+    const toGoBack = () => {
+      router.push("/gestao");
     };
 
-    const openAddUserPopup = () => {
-      isAddUserPopupOpen.value = true;
+    const viewUser = (id: number) => {
+      router.push({ name: "UserView", params: { id } });
     };
 
-    const closeAddUserPopup = () => {
-      isAddUserPopupOpen.value = false;
+    const editUser = (id: number) => {
+      router.push({ name: "UserEdit", params: { id } });
     };
 
-    const addUser = async (newUser: User) => {
-      const token = localStorage.getItem("token"); 
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`, 
-        },
-      };
-
-      await axios.post("http://localhost:3000/users", newUser, config); 
-      users.value.push(newUser);
-      closeAddUserPopup();
+    const confirmDelete = (id: number) => {
+      const confirmed = confirm("Você tem certeza que deseja fazer isso?");
+      if (confirmed) {
+        deleteUser(id);
+      }
     };
 
-    const confirmDeleteUser = (id: number) => {
-      userIdToDelete.value = id;
-      isDeletePopupOpen.value = true;
-    };
+    const deleteUser = async (id: number) => {
+      const token = localStorage.getItem("token"); // Obtém o token de autorização do localStorage
+      if (!token) {
+        console.error("Token não encontrado!");
+        return;
+      }
 
-    const deleteUser = async () => {
-      const token = localStorage.getItem("token"); 
-
-      const config = {
-        headers: {
-          Authorization: `Bearer ${token}`, 
-        },
-      };
-
-      await axios.delete(
-        `http://localhost:3000/users/${userIdToDelete.value}`,
-        config
-      ); 
-      users.value = users.value.filter(
-        (user) => user.id !== userIdToDelete.value
-      );
-      closeDeletePopup();
-    };
-
-    const closeDeletePopup = () => {
-      isDeletePopupOpen.value = false;
+      try {
+        await axios.delete(`http://localhost:3000/users/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        users.value = users.value.filter((user) => user.id !== id);
+        alert("Usuário deletado com sucesso!");
+      } catch (error) {
+        console.error("Erro ao deletar usuário:", error);
+        alert("Erro ao deletar usuário");
+      }
     };
 
     return {
       users,
-      selectedUser,
-      viewUser,
-      closeViewUser,
-      editUser,
-      isAddUserPopupOpen,
-      openAddUserPopup,
-      closeAddUserPopup,
-      addUser,
-      isDeletePopupOpen,
-      confirmDeleteUser,
+      confirmDelete,
       deleteUser,
-      closeDeletePopup,
+      editUser,
+      viewUser,
+      addUser,
+      capitalize,
+      toGoBack,
     };
   },
 });
@@ -184,28 +145,17 @@ export default defineComponent({
 
 <style scoped>
 h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  color: #70c2d6;
   margin: 10px;
   padding: 5px;
 }
 
 .add-user-btn {
-  background-color: #70c2d6;
-  border: none;
   padding: 10px;
   float: right;
   margin-bottom: 20px;
-}
-
-.add-user-btn {
-  background-color: #70c2d6;
-  border: none;
-  padding: 10px;
-  float: right;
-  margin-bottom: 20px;
-}
-
-.add-user-btn:hover {
-  background-color: #3b9bb3;
 }
 
 .container {
@@ -217,7 +167,7 @@ h1 {
   padding: 8px;
   background-color: #fff;
   color: #70c2d6;
-  border-color: #004152;
+  border-color: #7c7d7e;
   border-radius: 6px;
 }
 
@@ -230,10 +180,17 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+th {
+  background-color: #70c2d6;
+}
 th,
 td {
   padding: 12px;
   text-align: center;
   border-bottom: 1px solid #ddd;
+}
+.buttons-actions {
+  justify-content: space-between;
+  display: flex;
 }
 </style>

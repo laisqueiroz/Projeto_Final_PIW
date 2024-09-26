@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteUser = exports.updateUser = exports.createUser = exports.getUsers = exports.loginUser = void 0;
+exports.deleteUser = exports.getUserId = exports.updateUser = exports.createUser = exports.getUsers = exports.loginUser = void 0;
 const UserModel_1 = require("../Models/UserModel");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const secret_key = 'J55y0WyfKH0z9oUXVkM8';
@@ -64,6 +64,12 @@ const updateUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     return res.status(200).json(userToUpdate);
 });
 exports.updateUser = updateUser;
+const getUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.params;
+    const userId = yield UserModel_1.User.findByPk(id);
+    return res.status(200).json(userId);
+});
+exports.getUserId = getUserId;
 const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const userToDelete = yield UserModel_1.User.findByPk(id);
