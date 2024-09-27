@@ -19,7 +19,6 @@ class ServiceController {
   // Ver todos os serviços (Admin e Tutor)
   async getAllServices(req: Request, res: Response) {
     try {
-      console.log(Services.findAll())
       const services = await Services.findAll();
 
       res.status(200).json(services);
@@ -34,13 +33,33 @@ class ServiceController {
     try {
       const { id } = req.params;
       const { name, description, price, category } = req.body;
-      const updatedService = await Services.update(
-        { name, description, price, category },
-        { where: { id } }
-      );
-      res.status(200).json(updatedService);
+
+      const serviceToUpdate = await Services.findByPk(id);
+
+      if (!serviceToUpdate) {
+        return res.status(404).json({ message: 'Usuário não encontrado.' });
+      }
+      if (name) serviceToUpdate.name = name;
+      if (description) serviceToUpdate.description = description;
+      if (price) serviceToUpdate.price = price;
+      if (category) serviceToUpdate.category = category;
+
+      await serviceToUpdate.save();
+      res.status(200).json(serviceToUpdate);
     } catch (error) {
       res.status(500).json({ error: 'Erro ao atualizar serviço' });
+    }
+  }
+
+  async getServiceId(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+
+      const idService = await Services.findByPk(id);
+      
+      return res.status(200).json(idService);
+    } catch (error) {
+      res.status(500).json({ error: 'Erro ao buscar serviço!' });
     }
   }
 
@@ -48,7 +67,14 @@ class ServiceController {
   async deleteService(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      await Services.destroy({ where: { id } });
+    
+      const serviceToDelete = await Services.findByPk(id);
+
+      if (!serviceToDelete) {
+        return res.status(404).json({ message: 'Serviço/Produto não encontrado.' });
+      }
+
+      await serviceToDelete.destroy();
       res.status(200).json({ message: 'Serviço excluído com sucesso' });
     } catch (error) {
       res.status(500).json({ error: 'Erro ao excluir serviço' });

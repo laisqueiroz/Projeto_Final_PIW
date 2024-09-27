@@ -9,6 +9,9 @@ import ListarPets from "../components/ListarPets.vue";
 import AddUser from "@/components/AddUser.vue";
 import UserView from "@/components/UserView.vue";
 import UserEdit from "@/components/UserEdit.vue";
+import AddService from "@/components/AddService.vue";
+import ViewService from "@/components/ServiceView.vue";
+import EditService from "@/components/EditService.vue";
 
 const routes = [
   { path: "/", name: "Home", component: HomePage },
@@ -21,6 +24,9 @@ const routes = [
   { path: "/add-user", name: "AddUser", component: AddUser },
   { path: "/user-view/:id", name: "UserView", component: UserView },
   { path: "/user-edit/:id", name: "UserEdit", component: UserEdit },
+  { path: "/add-service", name: "AddService", component: AddService },
+  { path: "/service-view/:id", name: "ViewService", component: ViewService },
+  { path: "/service-edit/:id", name: "EditService", component: EditService },
 ];
 
 const router = createRouter({

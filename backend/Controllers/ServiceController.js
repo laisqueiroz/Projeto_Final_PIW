@@ -30,7 +30,6 @@ class ServiceController {
     getAllServices(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log(ServicesModel_1.Services.findAll());
                 const services = yield ServicesModel_1.Services.findAll();
                 res.status(200).json(services);
             }
@@ -45,11 +44,35 @@ class ServiceController {
             try {
                 const { id } = req.params;
                 const { name, description, price, category } = req.body;
-                const updatedService = yield ServicesModel_1.Services.update({ name, description, price, category }, { where: { id } });
-                res.status(200).json(updatedService);
+                const serviceToUpdate = yield ServicesModel_1.Services.findByPk(id);
+                if (!serviceToUpdate) {
+                    return res.status(404).json({ message: 'Usuário não encontrado.' });
+                }
+                if (name)
+                    serviceToUpdate.name = name;
+                if (description)
+                    serviceToUpdate.description = description;
+                if (price)
+                    serviceToUpdate.price = price;
+                if (category)
+                    serviceToUpdate.category = category;
+                yield serviceToUpdate.save();
+                res.status(200).json(serviceToUpdate);
             }
             catch (error) {
                 res.status(500).json({ error: 'Erro ao atualizar serviço' });
+            }
+        });
+    }
+    getServiceId(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const { id } = req.params;
+                const idService = yield ServicesModel_1.Services.findByPk(id);
+                return res.status(200).json(idService);
+            }
+            catch (error) {
+                res.status(500).json({ error: 'Erro ao buscar serviço!' });
             }
         });
     }
@@ -58,7 +81,11 @@ class ServiceController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { id } = req.params;
-                yield ServicesModel_1.Services.destroy({ where: { id } });
+                const serviceToDelete = yield ServicesModel_1.Services.findByPk(id);
+                if (!serviceToDelete) {
+                    return res.status(404).json({ message: 'Serviço/Produto não encontrado.' });
+                }
+                yield serviceToDelete.destroy();
                 res.status(200).json({ message: 'Serviço excluído com sucesso' });
             }
             catch (error) {

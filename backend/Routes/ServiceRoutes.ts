@@ -10,5 +10,6 @@ router.get('/service', authenticateJWT, authorizeRole(['admin']), authorizeSelfO
 router.post('/service', authenticateJWT, authorizeRole(['admin']), authorizeSelfOrAdmin, ServiceController.createService);
 router.put('/service/:id', authenticateJWT, authorizeRole(['admin']), authorizeSelfOrAdmin, ServiceController.updateService);
 router.delete('/service/:id', authenticateJWT, authorizeRole(['admin']), authorizeSelfOrAdmin, ServiceController.deleteService);
+router.get('/service/:id', ServiceController.getServiceId)
 
 export default router;
