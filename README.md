@@ -74,3 +74,7 @@ Lista as tecnologias, frameworks e bibliotecas utilizados.
 | POST | http://localhost:8080/add-service | http://localhost:3000/service/:id |
 | GET | http://localhost:8080/service-view/:id | http://localhost:3000/service:id |
 | PUT | http://localhost:8080/service-edit/:id | http://localhost:3000/service/:id |
+| POST | - | http://localhost:3000/pets/:id |
+| GET | http://localhost:8080/listar-pets | http://localhost:3000/pets |
+| PUT | - | http://localhost:3000/pets/:id |
+| DELETE | - / | http://localhost:3000/pets/:id |
