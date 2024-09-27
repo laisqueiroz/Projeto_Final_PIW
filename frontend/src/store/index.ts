@@ -28,6 +28,9 @@ const store = createStore<State>({
     getUserRole: (state) => {
       return state.user ? state.user.role : null;
     },
+    getUserId: (state) => {
+      return state.user ? state.user.id : null;
+    },
   },
 });
 

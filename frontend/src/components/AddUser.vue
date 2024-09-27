@@ -165,7 +165,7 @@ export default defineComponent({
           },
         });
         alert("Usuário criado com sucesso!");
-        router.push("/gestaouser"); // Redireciona de volta para a página de gestão de usuários
+        router.push("/gestaouser");
       } catch (error) {
         console.error("Erro ao criar usuário:", error);
         alert("Erro ao criar usuário");

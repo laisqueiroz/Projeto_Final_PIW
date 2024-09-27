@@ -16,9 +16,7 @@ class PetController {
     createPet(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const { name, dateBirth, species, breed, services, history } = req.body;
-                const user = req.user;
-                const userId = user.id; // Supondo que o userId é extraído do token JWT
+                const { name, dateBirth, species, breed, services, history, userId } = req.body;
                 const newPet = yield PetModel_1.Pet.create({ name, dateBirth, species, breed, services, history, userId });
                 res.status(201).json(newPet);
             }

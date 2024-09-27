@@ -71,7 +71,7 @@ export default defineComponent({
             router.push("/gestao");
             break;
           case "tutor":
-            router.push("/pets");
+            router.push(`/pets/${user.id}`);
             break;
           case "medVet":
             router.push("/listar-pets");

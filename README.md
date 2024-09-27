@@ -61,9 +61,16 @@ Lista as tecnologias, frameworks e bibliotecas utilizados.
 
 ## :neckbeard: Rotas da API REST utilizadas
 
-| Método HTTP | URL |
-| --- | --- |
-| GET | api/users|
-| POST | api/users |
-| PUT | api/users/:id |
-| DELETE | api/users/:id |
+| Método HTTP | URL FRONTEND | URL BACKEND |
+| --- | --- | --- |
+| POST | http://localhost:8080/login | http://localhost:3000/login |
+| GET | http://localhost:8080/gestaouser | http://localhost:3000/users |
+| PUT | http://localhost:8080/add-user | http://localhost:3000/users/:id |
+| DELETE | http://localhost:gestaouser/ | http://localhost:3000/users/:id |
+| GET | http://localhost:8080/user-view/:id | http://localhost:3000/users/:id |
+| GET | http://localhost:8080/user-edit/:id | http://localhost:3000/users/:id |
+| GET | http://localhost:8080/gestaoservice | http://localhost:3000/service |
+| DELETE | http://localhost:gestaoservice | http://localhost:3000/service/:id |
+| POST | http://localhost:8080/add-service | http://localhost:3000/service/:id |
+| GET | http://localhost:8080/service-view/:id | http://localhost:3000/service:id |
+| PUT | http://localhost:8080/service-edit/:id | http://localhost:3000/service/:id |

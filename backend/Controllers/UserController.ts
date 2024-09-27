@@ -11,14 +11,13 @@ export const loginUser = async (req: Request, res: Response): Promise<Response> 
   const { email, password} = req.body;
 
   const user = await User.findOne({where: {email} });
-  console.log(user)
   if(!user || !user.checkPassword(password)){
     
     return res.status(401).json({ message: 'Informações Inválidas'})
   };
 
   const token = jwt.sign({id: user.id, role: user.role, email: user.email}, secret_key, {expiresIn: '1h'});
-  return res.status(200).json({token, role: user.role});
+  return res.status(200).json({token, role: user.role, id: user.id});
 };
 
 export const getUsers = async (req: Request, res: Response): Promise<Response> => {

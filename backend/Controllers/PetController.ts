@@ -13,9 +13,7 @@ class PetController {
   // Adicionar um novo pet (somente Tutor)
   async createPet(req: CustomRequest, res: Response) {
     try {
-      const { name, dateBirth, species, breed, services, history } = req.body;
-      const user = req.user as JwtPayload
-      const userId = user.id; // Supondo que o userId é extraído do token JWT
+      const { name, dateBirth, species, breed, services, history, userId } = req.body;
       const newPet = await Pet.create({ name, dateBirth, species, breed, services, history, userId});
       res.status(201).json(newPet);
     } catch (error) {

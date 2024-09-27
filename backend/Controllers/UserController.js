@@ -20,13 +20,12 @@ UserModel_1.User.sync();
 const loginUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email, password } = req.body;
     const user = yield UserModel_1.User.findOne({ where: { email } });
-    console.log(user);
     if (!user || !user.checkPassword(password)) {
         return res.status(401).json({ message: 'Informações Inválidas' });
     }
     ;
     const token = jsonwebtoken_1.default.sign({ id: user.id, role: user.role, email: user.email }, secret_key, { expiresIn: '1h' });
-    return res.status(200).json({ token, role: user.role });
+    return res.status(200).json({ token, role: user.role, id: user.id });
 });
 exports.loginUser = loginUser;
 const getUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
