@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import { getUserRole, isAuthenticated } from "@/service/authService";
 import HomePage from "@/components/HomePage.vue";
 import Login from "../components/LoginForm.vue";
 import Gestao from "../components/GestaoAdmin.vue";
@@ -17,23 +18,97 @@ import AddPet from "@/components/AddPet.vue";
 const routes = [
   { path: "/", name: "Home", component: HomePage },
   { path: "/login", name: "Login", component: Login },
-  { path: "/gestao", name: "Gestao", component: Gestao },
-  { path: "/gestaouser", name: "GestaoUser", component: GestaoUser },
-  { path: "/gestaoservice", name: "GestaoService", component: GestaoService },
-  { path: "/pets/:id", name: "Pets", component: Pets },
-  { path: "/listar-pets", name: "ListarPets", component: ListarPets },
-  { path: "/add-user", name: "AddUser", component: AddUser },
-  { path: "/user-view/:id", name: "UserView", component: UserView },
-  { path: "/user-edit/:id", name: "UserEdit", component: UserEdit },
-  { path: "/add-service", name: "AddService", component: AddService },
-  { path: "/service-view/:id", name: "ViewService", component: ViewService },
-  { path: "/service-edit/:id", name: "EditService", component: EditService },
-  { path: "/add-pet", name: "AddPet", component: AddPet },
+  {
+    path: "/gestao",
+    name: "Gestao",
+    component: Gestao,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+    path: "/gestaouser",
+    name: "GestaoUser",
+    component: GestaoUser,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+    path: "/gestaoservice",
+    name: "GestaoService",
+    component: GestaoService,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+    path: "/pets/:id",
+    name: "Pets",
+    component: Pets,
+    meta: { requiresAuth: true, role: "tutor" },
+  },
+  {
+    path: "/listar-pets",
+    name: "ListarPets",
+    component: ListarPets,
+    meta: { requiresAuth: true, role: "tutor" },
+  },
+  {
+    path: "/add-user",
+    name: "AddUser",
+    component: AddUser,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+    path: "/user-view/:id",
+    name: "UserView",
+    component: UserView,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+    path: "/user-edit/:id",
+    name: "UserEdit",
+    component: UserEdit,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+    path: "/add-service",
+    name: "AddService",
+    component: AddService,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+    path: "/service-view/:id",
+    name: "ViewService",
+    component: ViewService,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+    path: "/service-edit/:id",
+    name: "EditService",
+    component: EditService,
+    meta: { requiresAuth: true, role: "admin" },
+  },
+  {
+    path: "/add-pet",
+    name: "AddPet",
+    component: AddPet,
+    meta: { requiresAuth: true, role: "tutor" },
+  },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes,
 });
 
 export default router;
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+  const userRole = isAuthenticated() ? getUserRole() : null;
+
+  if (requiresAuth && !isAuthenticated()) {
+    next("/login");
+  } else if (to.meta.role && userRole !== to.meta.role) {
+    alert("Você não tem autorização!");
+    next("/login");
+  } else {
+    next();
+  }
+});

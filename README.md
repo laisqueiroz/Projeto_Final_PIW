@@ -78,3 +78,17 @@ Lista as tecnologias, frameworks e bibliotecas utilizados.
 | GET | http://localhost:8080/listar-pets | http://localhost:3000/pets |
 | PUT | - | http://localhost:3000/pets/:id |
 | DELETE | - / | http://localhost:3000/pets/:id |
+
+
+## :neckbeard: Como utilizar o sistema
+
+A página inicial é um home básica com botão para login.
+
+Os dados de usuário para login são: 
+--------- Admin ---------
+email: laisqueiroz@email.com
+senha: 123456
+
+--------- Tutor ---------
+
+--------- Médico Veterinário ---------
