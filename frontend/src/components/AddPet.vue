@@ -1,4 +1,5 @@
 <template>
+  <title>Adicionar Pet</title>
   <div class="adicionar-pet">
     <h2>Adicionar Pet</h2>
     <form @submit.prevent="adicionarPet">

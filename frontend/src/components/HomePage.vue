@@ -1,4 +1,5 @@
 <template>
+  <title>Home</title>
   <div class="home-container">
     <div class="left-section">
       <img src="@/assets/pet-image.jpg" alt="Pet Image" class="pet-image" />

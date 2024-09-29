@@ -18,6 +18,9 @@ class ServiceController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name, description, price, category } = req.body;
+                if (!name || !description || !price || !category) {
+                    return res.status(400).json({ message: "Todos os campos são obrigatórios!" });
+                }
                 const newService = yield ServicesModel_1.Services.create({ name, description, price, category });
                 res.status(201).json(newService);
             }
@@ -46,7 +49,7 @@ class ServiceController {
                 const { name, description, price, category } = req.body;
                 const serviceToUpdate = yield ServicesModel_1.Services.findByPk(id);
                 if (!serviceToUpdate) {
-                    return res.status(404).json({ message: 'Usuário não encontrado.' });
+                    return res.status(404).json({ message: 'Serviço não encontrado!' });
                 }
                 if (name)
                     serviceToUpdate.name = name;
@@ -69,6 +72,9 @@ class ServiceController {
             try {
                 const { id } = req.params;
                 const idService = yield ServicesModel_1.Services.findByPk(id);
+                if (!idService) {
+                    return res.status(404).json({ message: "Serviço não existe não existe!" });
+                }
                 return res.status(200).json(idService);
             }
             catch (error) {

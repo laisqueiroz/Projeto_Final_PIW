@@ -1,6 +1,6 @@
 <template>
   <head>
-    <title>Login e Cadastro</title>
+    <title>Login</title>
   </head>
   <div class="principal">
     <h1>PetCheck</h1>

@@ -63,6 +63,7 @@
           <label>Papel:</label>
           <div>
             <input
+              name="role"
               class="btn-check"
               autocomplete="off"
               type="radio"
@@ -75,6 +76,7 @@
           </div>
           <div>
             <input
+              name="role"
               class="btn-check"
               autocomplete="off"
               type="radio"
@@ -87,6 +89,7 @@
           </div>
           <div>
             <input
+              name="role"
               class="btn-check"
               autocomplete="off"
               type="radio"

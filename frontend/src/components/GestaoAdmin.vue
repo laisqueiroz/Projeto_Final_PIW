@@ -1,4 +1,5 @@
 <template>
+  <title>Gestão - Admin</title>
   <div class="gestao-admin-container">
     <h1 class="page-title">Painel de Gestão</h1>
 

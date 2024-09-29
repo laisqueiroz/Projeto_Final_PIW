@@ -17,6 +17,9 @@ class PetController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const { name, dateBirth, species, breed, services, history, userId } = req.body;
+                if (!name || !dateBirth || !species || !breed || !services || !history || !userId) {
+                    return res.status(400).json({ message: "Campos obrigatórios não foram preenchidos." });
+                }
                 const newPet = yield PetModel_1.Pet.create({ name, dateBirth, species, breed, services, history, userId });
                 res.status(201).json(newPet);
             }
@@ -30,7 +33,7 @@ class PetController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = req.user;
-                const userId = user.id; // Supondo que o userId é extraído do token JWT
+                const userId = user.id;
                 const pets = yield PetModel_1.Pet.findAll({ where: { userId } });
                 res.status(200).json(pets);
             }
@@ -45,7 +48,7 @@ class PetController {
             try {
                 const { id } = req.params;
                 const user = req.user;
-                const userId = user.id; // Supondo que o userId é extraído do token JWT
+                const userId = user.id;
                 const pet = yield PetModel_1.Pet.findOne({ where: { id, userId } });
                 if (pet) {
                     yield pet.destroy();

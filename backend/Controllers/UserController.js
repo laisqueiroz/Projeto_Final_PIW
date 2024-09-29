@@ -66,6 +66,9 @@ exports.updateUser = updateUser;
 const getUserId = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;
     const userId = yield UserModel_1.User.findByPk(id);
+    if (!userId) {
+        return res.status(404).json({ message: "Usuário não encontrado!" });
+    }
     return res.status(200).json(userId);
 });
 exports.getUserId = getUserId;

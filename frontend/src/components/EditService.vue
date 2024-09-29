@@ -43,7 +43,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onMounted } from "vue";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
@@ -67,12 +67,18 @@ export default defineComponent({
         );
         Object.assign(service, response.data);
       } catch (error) {
-        console.error("erro ao buscar serviço:", error);
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status === 404) {
+          alert("Serviço não encontrado!");
+          router.push("/gestaoservice");
+        } else {
+          console.error("erro ao buscar serviço:", error);
+          alert("Algo deu errado!");
+        }
       }
     };
 
     const updateUser = async () => {
-      alert("chegou aqui");
       const token = localStorage.getItem("token");
 
       const config = {
@@ -80,7 +86,6 @@ export default defineComponent({
           Authorization: `Bearer ${token}`,
         },
       };
-      alert("passou pelo token");
 
       try {
         await axios.put(

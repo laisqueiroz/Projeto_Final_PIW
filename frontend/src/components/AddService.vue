@@ -41,6 +41,7 @@
           <label>Categoria:</label>
           <div>
             <input
+              name="category"
               class="btn-check"
               autocomplete="off"
               type="radio"
@@ -53,6 +54,7 @@
           </div>
           <div>
             <input
+              name="category"
               class="btn-check"
               autocomplete="off"
               type="radio"
@@ -65,6 +67,7 @@
           </div>
           <div>
             <input
+              name="category"
               class="btn-check"
               autocomplete="off"
               type="radio"

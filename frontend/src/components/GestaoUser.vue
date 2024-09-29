@@ -1,4 +1,5 @@
 <template>
+  <title>Gestão Usuários</title>
   <h1>Gestão de Usuários</h1>
   <div class="container">
     <div class="buttons-actions">

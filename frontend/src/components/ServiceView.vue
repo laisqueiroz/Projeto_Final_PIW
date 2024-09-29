@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onMounted } from "vue";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
@@ -55,7 +55,14 @@ export default defineComponent({
         );
         Object.assign(service, response.data);
       } catch (error) {
-        console.error("Serviço não encontrado:", error);
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status === 404) {
+          alert("Serviço não encontrado!");
+          router.push("/gestaoservice");
+        } else {
+          console.error("Aconteceu algum erro:", error);
+          alert("Algo deu errado!");
+        }
       }
     };
 
@@ -64,7 +71,7 @@ export default defineComponent({
     };
 
     const returnMenu = () => {
-      router.push("/gestaouser");
+      router.push("/gestaoservice");
     };
 
     onMounted(fetchUser);

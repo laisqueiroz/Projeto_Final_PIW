@@ -9,6 +9,11 @@ class ServiceController {
   async createService(req: Request, res: Response) {
     try {
       const { name, description, price , category} = req.body;
+      
+      if ( !name || !description || !price || !category) {
+        return res.status(400).json({ message: "Todos os campos são obrigatórios!" });
+      }
+
       const newService = await Services.create({ name, description, price, category });
       res.status(201).json(newService);
     } catch (error) {
@@ -37,7 +42,7 @@ class ServiceController {
       const serviceToUpdate = await Services.findByPk(id);
 
       if (!serviceToUpdate) {
-        return res.status(404).json({ message: 'Usuário não encontrado.' });
+        return res.status(404).json({ message: 'Serviço não encontrado!' });
       }
       if (name) serviceToUpdate.name = name;
       if (description) serviceToUpdate.description = description;
@@ -56,6 +61,10 @@ class ServiceController {
       const { id } = req.params;
 
       const idService = await Services.findByPk(id);
+
+      if (!idService) {
+        return res.status(404).json({ message: "Serviço não existe não existe!"});
+      }
       
       return res.status(200).json(idService);
     } catch (error) {

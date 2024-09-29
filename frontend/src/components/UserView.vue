@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, onMounted } from "vue";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useRoute, useRouter } from "vue-router";
 
 export default defineComponent({
@@ -53,7 +53,14 @@ export default defineComponent({
         );
         Object.assign(user, response.data);
       } catch (error) {
-        console.error("Error fetching user:", error);
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status === 404) {
+          alert("Usuário não encontrado!");
+          router.push("/gestaouser");
+        } else {
+          console.error("erro ao buscar usuário:", error);
+          alert("Algo deu errado!");
+        }
       }
     };
 
