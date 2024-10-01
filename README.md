@@ -86,10 +86,21 @@ Node.js, Express, Sequelize, SQLite, CORS, Typescript
 A página inicial é um home básica com botão para login.
 
 Os dados de usuário para login são:
+
 --------- Admin ---------
+
 email: laisqueiroz@email.com
+
 senha: 123456
 
 --------- Tutor ---------
 
+email: testetutor@email.com
+
+senha: 123456
+
 --------- Médico Veterinário ---------
+
+email: testemedVet@email.com
+
+senha: 123456
