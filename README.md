@@ -41,11 +41,11 @@ Um sistema para um PetShop, onde será possível gerenciar os serviços e os cli
 
 **Frontend:**
 
-Lista as tecnologias, frameworks e bibliotecas utilizados.
+Vue.js 3, Typescript, Bootstrap, Axios, Vuex, VueRouter
 
 **Backend:**
 
-Lista as tecnologias, frameworks e bibliotecas utilizados.
+Node.js, Express, Sequelize, SQLite, CORS, Typescript
 
 
 ## :shipit: Operações implementadas para cada entidade da aplicação
@@ -56,6 +56,7 @@ Lista as tecnologias, frameworks e bibliotecas utilizados.
 | USERS | X |  X  | X | X |
 | SERVICES | X |  X  |  X | X |
 | PET | X |  X  | X | X |
+| MedicalRecord | X | X |   | X |
 
 > Lembre-se que é necessário implementar o CRUD de pelo menos duas entidades.
 
@@ -84,7 +85,7 @@ Lista as tecnologias, frameworks e bibliotecas utilizados.
 
 A página inicial é um home básica com botão para login.
 
-Os dados de usuário para login são: 
+Os dados de usuário para login são:
 --------- Admin ---------
 email: laisqueiroz@email.com
 senha: 123456
